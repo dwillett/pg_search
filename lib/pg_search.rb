@@ -29,10 +29,10 @@ module PgSearch
                        ->(query) { {:query => query}.merge(options) }
                      end
 
-      define_singleton_method(name) do |*args|
+      define_singleton_method(name) do |*args, &block|
         config = Configuration.new(options_proc.call(*args), self)
         scope_options = ScopeOptions.new(config)
-        scope_options.apply(self)
+        scope_options.apply(self, &block)
       end
     end
 
